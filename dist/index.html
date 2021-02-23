@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Righteous&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/31b3a4ba31.js" crossorigin="anonymous"></script>
+    <title>Taskify</title>
+</head>
+
+<body>
+    <nav class="main-nav">
+        <a href=""><i class="fas fa-bars white-icon"></i></a>
+        <span class="logo">
+          Taskify
+        </span>
+        <div class="flex-right">
+            <a href="" class="big-link" id="login">Login</a>
+            <button class="big-btn white-btn" id="signup">Sign Up</button>
+        </div>
+    </nav>
+    <div class="grid-container">
+        <aside class="sidebar">
+            <ul id="sidebar-links">
+                <li><a href="" class="big-link bold">Project 1</a></li>
+                <li><a href="" class="big-link bold">Project 2</a></li>
+                <li><a href="" class="big-link bold">Project 3</a></li>
+                <li><a href="" class="big-link">Project 4</a></li>
+            </ul>
+            <button class="big-btn blue-btn" id="new-project-btn">New Project</button>
+        </aside>
+
+        <section class="main-body">
+            <article class="project">
+                <div class="project-title">
+                    <div class="box">
+                        <input id="one" type="checkbox">
+                        <span class="check"></span>
+                        <label for="one" class="title">Project 1</label>
+                    </div>
+                    <div class="flex-right">
+                        <a href="" class="icon-link"><i class="fas fa-edit white"></i></a>
+                        <a href="" class="icon-link"><i class="fas fa-trash-alt white"></i></a>
+                    </div>
+                </div>
+                <div class="project-block expanded">
+                    <div class="flex-wrapper">
+                        <div class="description">Description</div>
+                        <p class="basic-text">This is where the description of the project will go. This can be a long paragraph or a short little blurb. It’s up to the creator. Most likely this will not be as long as this description here. </p>
+                    </div>
+
+                    <div class="day-label">Today</div>
+                    <div class="task-wrapper">
+                        <div class="box-small">
+                            <input id="two" type="checkbox">
+                            <span class="check-small"></span>
+                            <label for="two" class="task-name">Task 1</label>
+                        </div>
+                        <div class="flex-right">
+                            <span class="due-date">Due Today</span>
+                            <a href=""><i class="fas fa-times-circle delete-btn"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="task-wrapper">
+                        <div class="box-small">
+                            <input id="three" type="checkbox">
+                            <span class="check-small"></span>
+                            <label for="three" class="complete">Task 2</label>
+                        </div>
+                        <div class="flex-right">
+                            <span class="due-date">Completed</span>
+                            <a href=""><i class="fas fa-times-circle delete-btn"></i></a>
+                        </div>
+                    </div>
+
+                    <div class="task-wrapper">
+                        <div class="box-small">
+                            <input id="four" type="checkbox">
+                            <span class="check-small"></span>
+                            <label for="four" class="">Task 2</label>
+                        </div>
+                        <div class="flex-right">
+                            <span class="due-date">Completed</span>
+                            <a href=""><i class="fas fa-times-circle delete-btn"></i></a>
+                        </div>
+                    </div>
+                    <div class="task-info">
+                        <p class="small-text">This is a task description</p>
+                    </div>
+
+
+                    <div class="day-label">Later</div>
+                    <div class="task-wrapper">
+                        <a href=""><i class="fas fa-plus-circle bigger-icon"></i></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project">
+                <div class="project-title">
+                    <div class="box">
+                        <input id="one" type="checkbox">
+                        <span class="check"></span>
+                        <label for="one" class="title">Project 2</label>
+                    </div>
+                    <div class="flex-right">
+                        <a href="" class="icon-link"><i class="fas fa-edit white"></i></a>
+                        <a href="" class="icon-link"><i class="fas fa-trash-alt white"></i></a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="project">
+                <div class="project-title">
+                    <div class="box">
+                        <input id="one" type="checkbox">
+                        <span class="check"></span>
+                        <label for="one" class="title">Project 3</label>
+                    </div>
+                    <div class="flex-right">
+                        <a href="" class="icon-link"><i class="fas fa-edit white"></i></a>
+                        <a href="" class="icon-link"><i class="fas fa-trash-alt white"></i></a>
+                    </div>
+                </div>
+            </article>
+        </section>
+    </div>
+
+    <footer class="bottom-nav"></footer>
+
+    <script src="main.js"></script>
+</body>
+
+</html>
