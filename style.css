@@ -1,0 +1,374 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Quicksand', sans-serif;
+}
+
+
+/* MAIN STRUCTURE */
+
+.main-nav {
+    width: 100%;
+    height: 70px;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    background-color: #61C0BF;
+    font-size: 1.5rem;
+    padding: 1.5rem;
+    box-sizing: border-box;
+}
+
+.grid-container {
+    display: flex;
+}
+
+.sidebar {
+    width: 15vw;
+    min-width: 220px;
+    height: 90vh;
+    background-color: #F2FEFF;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-body {
+    background-color: #DFF4F3;
+    height: 90vh;
+    width: 100%;
+    padding: 3rem;
+    box-sizing: border-box;
+}
+
+.bottom-nav {
+    background-color: #BBDED6;
+    width: 100%;
+    height: 5vh;
+}
+
+.project-title {
+    border-radius: 25px;
+    height: 50px;
+    background-color: #BBDED6;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 1.5rem;
+}
+
+.project:not(:first-child) {
+    margin-top: 2rem;
+}
+
+.project {
+    max-width: 708px;
+    margin: 0 auto;
+}
+
+.project-block {
+    width: auto;
+    border-radius: 0 0 25px 25px;
+    padding: 1rem;
+    margin: 0 2rem;
+    background-color: #F2FEFF;
+    box-sizing: border-box;
+}
+
+.task-info {
+    padding-left: 2rem;
+    margin-top: -4px;
+}
+
+
+/* LOGOS */
+
+.logo {
+    margin-left: 2rem;
+    font-family: 'Righteous', cursive;
+    color: #F2FEFF;
+}
+
+.white-icon {
+    color: #F2FEFF;
+}
+
+
+/* FLEX */
+
+.flex-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.flex-wrapper {
+    display: flex;
+}
+
+.task-wrapper {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+}
+
+
+/* LISTS */
+
+#sidebar-links li {
+    padding: 0.5rem;
+}
+
+
+/* LINKS */
+
+a {
+    text-decoration: none;
+}
+
+#login {
+    margin-right: 2rem;
+    font-size: 1.25rem;
+    color: #F2FEFF;
+}
+
+#sidebar-links {
+    margin: 2.5rem 1rem 1rem 1rem;
+    padding-left: 0.5rem;
+    list-style: none;
+}
+
+.big-link {
+    font-weight: bold;
+    font-size: 1.25rem;
+    color: #BBDED6;
+}
+
+.bold {
+    color: #26C9BF;
+}
+
+.white {
+    color: #F2FEFF;
+}
+
+.icon-link {
+    padding-left: 1rem;
+}
+
+.fa-plus-circle {
+    color: #BBDED6;
+}
+
+i.bigger-icon {
+    font-size: 1.3rem;
+}
+
+
+/* BUTTONS */
+
+.big-btn {
+    height: 50px;
+    border-radius: 25px;
+    border: none;
+    padding: 0 1.5rem;
+    font-size: 1.25rem;
+}
+
+.white-btn {
+    color: #26C9BF;
+    background-color: #F2FEFF;
+}
+
+.blue-btn {
+    color: #F2FEFF;
+    background-color: #61C0BF;
+}
+
+#new-project-btn {
+    margin: 1.5rem;
+}
+
+
+/* CHECKBOXES */
+
+.box {
+    width: 300px;
+    margin: 25px 0;
+    display: flex;
+    align-items: center;
+    user-select: none;
+}
+
+.box label {
+    font-size: 18px;
+    font-weight: bold;
+    color: #4d4d4d;
+    position: absolute;
+    z-index: 10;
+    padding-left: 50px;
+    cursor: pointer;
+}
+
+.box input {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+}
+
+.box input:checked~.check {
+    border-color: #F2FEFF;
+    box-shadow: 0px 0px 0px 15px #F2FEFF inset;
+}
+
+.box input:checked~.check::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.box .check {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 100px;
+    background-color: transparent;
+    border: 3px solid #F2FEFF;
+    box-shadow: 0px 0px 0px 0px #F2FEFF inset;
+    transition: all 0.15s cubic-bezier(0, 1.05, 0.72, 1.07);
+}
+
+.box .check::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 4;
+    position: absolute;
+    transform: scale(0);
+    background-size: 50%;
+    background-image: url('http://s6.picofile.com/d/8392306668/c38c12a0-6db3-47d4-a80c-7dad8fab5186/checkmark.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    transition-delay: 0.2s !important;
+    transition: all 0.25s cubic-bezier(0, 1.05, 0.72, 1.07);
+}
+
+.box-small {
+    width: 300px;
+    margin: 0.25rem 0;
+    display: flex;
+    align-items: center;
+    user-select: none;
+}
+
+.box-small label {
+    font-size: 0.85rem;
+    font-weight: bold;
+    color: #26C9BF;
+    position: absolute;
+    z-index: 10;
+    padding-left: 2rem;
+    cursor: pointer;
+}
+
+.box-small input {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+}
+
+.box-small input:checked~.check-small {
+    border-color: #BBDED6;
+    box-shadow: 0px 0px 0px 15px #BBDED6 inset;
+}
+
+.box-small input:checked~.check-small::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.box-small .check-small {
+    width: 14px;
+    height: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    border-radius: 100px;
+    background-color: transparent;
+    border: 3px solid #BBDED6;
+    box-shadow: 0px 0px 0px 0px #BBDED6 inset;
+    transition: all 0.15s cubic-bezier(0, 1.05, 0.72, 1.07);
+}
+
+.box-small .check-small::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    z-index: 4;
+    position: absolute;
+    transform: scale(0);
+    background-size: 50%;
+    background-image: url('http://s6.picofile.com/d/8392306668/c38c12a0-6db3-47d4-a80c-7dad8fab5186/checkmark.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    transition-delay: 0.2s !important;
+    transition: all 0.25s cubic-bezier(0, 1.05, 0.72, 1.07);
+}
+
+
+/* TEXT */
+
+.description {
+    font-weight: bold;
+    color: #26C9BF;
+    font-size: 0.85rem;
+    text-align: right;
+    width: 15%;
+    margin-left: 3rem;
+}
+
+.basic-text {
+    padding: 0 0 1rem 1.5rem;
+    margin: 0 3rem 0 0;
+    color: #61C0BF;
+    font-size: 0.85rem;
+}
+
+.day-label {
+    margin: 0.5rem 0;
+    font-size: 0.85rem;
+    color: #4d4d4d;
+}
+
+.due-date {
+    font-size: 0.85rem;
+    font-weight: lighter;
+    padding-right: 1rem;
+    color: #26C9BF;
+}
+
+.delete-btn {
+    color: #BBDED6;
+}
+
+.complete {
+    text-decoration: line-through;
+    color: #BBDED6 !important;
+}
+
+.small-text {
+    font-size: 0.7rem;
+    color: #26C9BF;
+    font-weight: lighter;
+    padding: 0;
+    margin: 0;
+}
+
+
+/* ICONS */
