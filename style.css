@@ -22,6 +22,7 @@ body {
 
 .grid-container {
     display: flex;
+    transition: 1s ease;
 }
 
 .sidebar {
@@ -30,7 +31,15 @@ body {
     height: 90vh;
     background-color: #F2FEFF;
     display: flex;
+    flex-wrap: nowrap;
     flex-direction: column;
+    transition: 1s ease;
+    overflow: hidden;
+}
+
+.collapse {
+    width: 0;
+    min-width: 0;
 }
 
 .main-body {
@@ -39,6 +48,7 @@ body {
     width: 100%;
     padding: 3rem;
     box-sizing: border-box;
+    transition: 1s ease;
 }
 
 .bottom-nav {
@@ -56,6 +66,7 @@ body {
     align-items: center;
     box-sizing: border-box;
     padding: 1.5rem;
+    cursor: pointer;
 }
 
 .project:not(:first-child) {
@@ -123,8 +134,8 @@ body {
 
 /* LINKS */
 
-a {
-    text-decoration: none;
+.clickable {
+    cursor: pointer;
 }
 
 #login {
@@ -143,6 +154,15 @@ a {
     font-weight: bold;
     font-size: 1.25rem;
     color: #BBDED6;
+    white-space: nowrap;
+}
+
+#sidebar-links .big-link {
+    transition: 100ms ease-in;
+}
+
+#sidebar-links .big-link:hover {
+    padding-left: 1rem;
 }
 
 .bold {
@@ -174,6 +194,7 @@ i.bigger-icon {
     border: none;
     padding: 0 1.5rem;
     font-size: 1.25rem;
+    white-space: nowrap;
 }
 
 .white-btn {
@@ -188,74 +209,16 @@ i.bigger-icon {
 
 #new-project-btn {
     margin: 1.5rem;
+    width: 172px;
+    transition: 300ms ease-in-out;
+}
+
+#new-project-btn:hover {
+    transform: scale(1.1);
 }
 
 
 /* CHECKBOXES */
-
-.box {
-    width: 300px;
-    margin: 25px 0;
-    display: flex;
-    align-items: center;
-    user-select: none;
-}
-
-.box label {
-    font-size: 18px;
-    font-weight: bold;
-    color: #4d4d4d;
-    position: absolute;
-    z-index: 10;
-    padding-left: 50px;
-    cursor: pointer;
-}
-
-.box input {
-    opacity: 0;
-    visibility: hidden;
-    position: absolute;
-}
-
-.box input:checked~.check {
-    border-color: #F2FEFF;
-    box-shadow: 0px 0px 0px 15px #F2FEFF inset;
-}
-
-.box input:checked~.check::after {
-    opacity: 1;
-    transform: scale(1);
-}
-
-.box .check {
-    width: 20px;
-    height: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    border-radius: 100px;
-    background-color: transparent;
-    border: 3px solid #F2FEFF;
-    box-shadow: 0px 0px 0px 0px #F2FEFF inset;
-    transition: all 0.15s cubic-bezier(0, 1.05, 0.72, 1.07);
-}
-
-.box .check::after {
-    content: '';
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    z-index: 4;
-    position: absolute;
-    transform: scale(0);
-    background-size: 50%;
-    background-image: url('http://s6.picofile.com/d/8392306668/c38c12a0-6db3-47d4-a80c-7dad8fab5186/checkmark.svg');
-    background-repeat: no-repeat;
-    background-position: center;
-    transition-delay: 0.2s !important;
-    transition: all 0.25s cubic-bezier(0, 1.05, 0.72, 1.07);
-}
 
 .box-small {
     width: 300px;
@@ -370,5 +333,41 @@ i.bigger-icon {
     margin: 0;
 }
 
+.title {
+    width: 300px;
+    margin: 25px 0;
+    font-size: 18px;
+    font-weight: bolder;
+    color: #4d4d4d;
+    position: absolute;
+    padding-left: 1.5rem;
+    pointer-events: none;
+}
 
-/* ICONS */
+
+/* FORMS */
+
+#new-project-form {
+    opacity: 0;
+    width: 0;
+    transition: 300ms ease-in-out;
+}
+
+#new-project-form.expanded {
+    width: 172px;
+    opacity: 1;
+}
+
+input.underline {
+    border: none;
+    border-bottom: 3px solid #BBDED6;
+    background-color: transparent;
+    margin: 1.5rem;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    width: 172px;
+}
+
+.hidden {
+    display: none;
+}
