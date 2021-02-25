@@ -67,6 +67,7 @@ body {
     box-sizing: border-box;
     padding: 1.5rem;
     cursor: pointer;
+    transition: 1s ease-in;
 }
 
 .project:not(:first-child) {
@@ -122,6 +123,7 @@ body {
     display: flex;
     justify-content: left;
     align-items: center;
+    margin-top: 0.5rem;
 }
 
 
@@ -177,12 +179,14 @@ body {
     padding-left: 1rem;
 }
 
-.fa-plus-circle {
+.fa-plus-circle,
+.fa-check-circle {
     color: #BBDED6;
 }
 
 i.bigger-icon {
     font-size: 1.3rem;
+    cursor: pointer;
 }
 
 
@@ -233,7 +237,7 @@ i.bigger-icon {
     font-weight: bold;
     color: #26C9BF;
     position: absolute;
-    z-index: 10;
+    z-index: 0;
     padding-left: 2rem;
     cursor: pointer;
 }
@@ -262,6 +266,7 @@ i.bigger-icon {
     align-items: center;
     position: relative;
     border-radius: 100px;
+    z-index: 10;
     background-color: transparent;
     border: 3px solid #BBDED6;
     box-shadow: 0px 0px 0px 0px #BBDED6 inset;
@@ -277,7 +282,7 @@ i.bigger-icon {
     position: absolute;
     transform: scale(0);
     background-size: 50%;
-    background-image: url('http://s6.picofile.com/d/8392306668/c38c12a0-6db3-47d4-a80c-7dad8fab5186/checkmark.svg');
+    /* background-image: url('http://s6.picofile.com/d/8392306668/c38c12a0-6db3-47d4-a80c-7dad8fab5186/checkmark.svg'); */
     background-repeat: no-repeat;
     background-position: center;
     transition-delay: 0.2s !important;
@@ -369,5 +374,34 @@ input.underline {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
+}
+
+[data-new-task-form] {
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: 300ms ease-in;
+}
+
+[data-new-task-form].expanded {
+    opacity: 1;
+    transition: 300ms ease-in;
+}
+
+[data-new-task-form] .underline {
+    margin: 0;
+    width: 31%;
+}
+
+.form-wrapper {
+    display: flex;
+}
+
+
+/* SPACING */
+
+.extra-top-margin {
+    margin-top: 1rem;
 }
