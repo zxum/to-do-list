@@ -1,19 +1,24 @@
-// import { compareAsc } from 'date-fns';
+import { format, isToday, toDate } from 'date-fns';
 
 // NAVBAR 
 const navbarModule = (function() {
     // cache DOM
     let menuBurger = document.getElementById('menu-burger')
     let sidebar = document.querySelector('.sidebar')
+    let deleteProjectsBtn = document.getElementById('delete-all-projects-btn')
 
     // event binding
     menuBurger.addEventListener('click', collapseSideBar)
+    deleteProjectsBtn.addEventListener('click', deleteAllProjects)
 
     // functions
     function collapseSideBar() {
         sidebar.classList.toggle('collapse')
-        console.log(sidebar)
-        console.log('Menu has been clicked')
+    }
+
+    function deleteAllProjects() {
+        projects = []
+        saveAndRender()
     }
 })();
 
@@ -43,7 +48,10 @@ newProjectButton.addEventListener('click', renderProjectForm)
 newProjectForm.addEventListener('submit', e => {
     e.preventDefault()
     let projectName = projectNameInput.value
-    if (projectName == null || projectName === '') return
+    if (projectName == null || projectName === '') {
+        hideProjectForm()
+        return
+    }
     let project = createProject(projectName)
     projectNameInput.value = null
     hideProjectForm()
@@ -61,42 +69,46 @@ sidebarProjectContainer.addEventListener('click', e => {
         selectedProject.expanded = false
         saveAndRender()
     }
-    // console.log(e.target)
 })
-
+projectDisplayContainer.addEventListener('submit', e => {
+    e.preventDefault()
+})
 projectDisplayContainer.addEventListener('click', e => {
     if (e.target.id == 'delete-project-btn') {
         let projectId = e.target.parentNode.parentNode.parentNode.id
         projects = projects.filter(project => project.id != projectId)
-        console.log(projects)
 
         saveAndRender()
     } else if (e.target.classList.contains('project-title')) {
         let projectId = e.target.id
         let project = findProject(projectId)
         project.expanded = !project.expanded
-        console.log(project)
 
         saveAndRender()
     } else if (e.target.classList.contains('fa-plus-circle')) {
         let newTaskFormArea = e.target.parentNode
         let newTaskForm = newTaskFormArea.querySelector('[data-new-task-form]')
         let newTaskButton = e.target
-        console.log(newTaskButton)
 
-        renderTaskForm(newTaskButton, newTaskForm)
+        renderForm(newTaskButton, newTaskForm)
     } else if (e.target.id == 'new-task-form-submit') {
-
         let newTaskForm = e.target.parentNode
+        let newTaskBtn = newTaskForm.parentNode.parentNode.querySelector('#new-task-button')
+
         let projectId = e.target.parentNode.parentNode.parentNode.parentNode.previousElementSibling.id
-        console.log(projectId)
         let taskNameInput = newTaskForm.querySelector('[data-task-name-input]').value
         let taskDescInput = newTaskForm.querySelector('[data-task-desc-input]').value
         let taskDateInput = newTaskForm.querySelector('[data-task-date-input]').value
-        if (taskNameInput == null || taskNameInput == "") return
+        let date = taskDateInput == "" ? "" : new Date(taskDateInput + "T00:00")
+
+        if (taskNameInput == null || taskNameInput == "") {
+            hideForm(newTaskBtn, newTaskForm)
+            return
+        }
+
         let project = findProject(projectId)
 
-        let task = createTask(taskNameInput, taskDescInput, taskDateInput)
+        let task = createTask(taskNameInput, taskDescInput, date)
         project.tasks.push(task)
 
         saveAndRender()
@@ -105,7 +117,7 @@ projectDisplayContainer.addEventListener('click', e => {
         let checkboxInput = checkSpan.previousElementSibling
         let taskId = checkboxInput.id
         let projectId = e.target.parentNode.parentNode.parentNode.parentNode.previousElementSibling.id
-            // console.log(projectId)
+
         let task = findTask(taskId, projectId)
         task.completed = !task.completed
         checkboxInput.checked = !checkboxInput.checked
@@ -126,11 +138,48 @@ projectDisplayContainer.addEventListener('click', e => {
         let project = findProject(projectId)
 
         project.tasks = project.tasks.filter(task => task.id != taskId)
-        console.log(taskId)
-        console.log(project)
+
         saveAndRender()
-    } else if (e.target.id = "edit-btn") {
-        console.log(e.target)
+    } else if (e.target.id === "edit-btn") {
+        let projectTitle = e.target.parentNode.parentNode.previousElementSibling.previousElementSibling
+        let projectForm = projectTitle.nextElementSibling
+
+        let projectTitleValue = projectTitle.innerText
+
+        let projectTitleInput = projectForm.querySelector('#new-project-name-input')
+
+        projectTitleInput.value = projectTitleValue
+        projectTitleInput.focus()
+
+        renderForm(projectTitle, projectForm)
+    } else if (e.target.id === "project-description-text") {
+        let projectDesc = e.target
+        let flexWrapper = e.target.parentNode
+        let prevDesc = e.target.innerText
+
+        let descForm = flexWrapper.querySelector('[data-project-description-form]')
+        let descInput = descForm.querySelector('[data-project-description-input]')
+        descInput.value = prevDesc
+        descInput.focus()
+
+        renderForm(projectDesc, descForm)
+    } else if (e.target.id === "project-description-form-submit") {
+        let descForm = e.target.parentNode
+        let projectId = e.target.parentNode.parentNode.parentNode.previousElementSibling.id
+        let descInput = descForm.querySelector('[data-project-description-input]').value
+        if (descInput == null || descInput == "") return
+        let project = findProject(projectId)
+
+        project.description = descInput
+        saveAndRender()
+    } else if (e.target.id === "project-name-form-submit") {
+        let projectNameFormValue = e.target.parentNode.querySelector('#new-project-name-input').value
+
+        let projectId = e.target.parentNode.parentNode.id
+        let project = findProject(projectId)
+
+        project.name = projectNameFormValue
+        saveAndRender()
     }
 })
 
@@ -157,7 +206,12 @@ function hideProjectForm() {
     newProjectForm.classList.remove('expanded')
 }
 
-function renderTaskForm(button, form) {
+function hideForm(button, form) {
+    button.classList.remove('hidden')
+    form.classList.remove('expanded')
+}
+
+function renderForm(button, form) {
     button.classList.add('hidden')
     form.classList.add('expanded')
 }
@@ -183,6 +237,7 @@ function createTask(name, description, duedate) {
         expanded: false
     }
 }
+
 
 
 
@@ -246,7 +301,7 @@ function renderProjectsBlock() {
         let projectDescriptionText = projectBlock.querySelector('[data-project-description-text]')
         let taskListArea = projectBlock.getElementById('task-list')
 
-        projectDescriptionText.innerText = project.description
+        projectDescriptionText.innerText = project.description || "Add a Description here!"
 
         let sortedTasks = project.tasks.sort((a, b) => (a.duedate > b.duedate) ? 1 : -1)
         sortedTasks.forEach(task => {
@@ -260,7 +315,8 @@ function renderProjectsBlock() {
 
             checkbox.checked = task.completed
             mainTaskWrapper.id = task.id
-            dueDate.innerText = task.duedate
+            dueDate.innerText = provideDueDate(task)
+
             label.htmlFor = task.id
             checkbox.id = task.id
             label.innerText = task.name
@@ -276,12 +332,24 @@ function renderProjectsBlock() {
 
             taskListArea.appendChild(taskWrapper)
         })
-
-
-
-
         projectArticle.appendChild(projectBlock)
     })
+}
+
+function provideDueDate(task) {
+
+    if (task.completed == true) {
+        return "Completed"
+    } else {
+        if (isToday(task.duedate)) {
+            return "Today"
+        } else if (task.duedate == "" || task.duedate == null) {
+            return ""
+        } else {
+            let date = toDate(Date.parse(task.duedate))
+            return format(date, 'PPP')
+        }
+    }
 }
 
 

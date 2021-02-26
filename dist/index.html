@@ -17,113 +17,22 @@
 
         <i class="fas fa-bars white-icon clickable" id="menu-burger"></i>
         <span class="logo">Taskify</span>
-
-
         <div class="flex-right">
-            <!-- <a class="big-link" id="login">Login</a>s -->
-            <button class="big-btn white-btn" id="signup">Delete All Projects</button>
+            <button class="big-btn white-btn" id="delete-all-projects-btn">Delete All Projects</button>
         </div>
+
     </nav>
     <div class="grid-container">
+
         <aside class="sidebar">
-            <ul id="sidebar-links" data-sidebar-project-container>
-                <!-- <li><a class="big-link bold">Project 1</a></li>
-                <li><a class="big-link bold">Project 2</a></li>
-                <li><a class="big-link bold">Project 3</a></li>
-                <li><a class="big-link">Project 4</a></li> -->
-            </ul>
+            <ul id="sidebar-links" data-sidebar-project-container></ul>
             <button class="big-btn blue-btn clickable" id="new-project-btn">New Project</button>
             <form id="new-project-form" data-new-project-form>
-                <input type="text" class="underline" id="project-name" placeholder="Project Name">
+                <input type="text" class="underline" id="project-name" maxlength="12" placeholder="Project Name">
             </form>
         </aside>
 
-        <section class="main-body" id='project-display-container'>
-            <!-- <article class="project">
-                <div class="project-title" id='project-title'>
-
-                    <p class="title">Project 1</p>
-
-                    <div class="flex-right">
-                        <a class="icon-link"><i class="fas fa-edit white edit-btn" id=""></i></a>
-                        <a class="icon-link"><i class="fas fa-trash-alt white delete-project-btn" id=""></i></a>
-                    </div>
-                </div>
-                <div class="project-block expanded">
-                    <div class="flex-wrapper">
-                        <div class="description">Description</div>
-                        <p class="basic-text">This is where the description of the project will go. This can be a long paragraph or a short little blurb. It’s up to the creator. Most likely this will not be as long as this description here. </p>
-                    </div>
-
-                    <div class="day-label">Today</div>
-                    <div id="task-list">
-                        <div class="task-wrapper">
-                            <div class="box-small">
-                                <input id="two" type="checkbox">
-                                <span class="check-small"></span>
-                                <label for="two" class="task-name">Task 1</label>
-                            </div>
-                            <div class="flex-right">
-                                <span class="due-date">Due Today</span>
-                                <a href=""><i class="fas fa-times-circle delete-btn"></i></a>
-                            </div>
-                        </div>
-
-                        <div class="task-wrapper">
-                            <div class="box-small">
-                                <input id="three" type="checkbox">
-                                <span class="check-small"></span>
-                                <label for="three" class="complete">Task 2</label>
-                            </div>
-                            <div class="flex-right">
-                                <span class="due-date">Completed</span>
-                                <a href=""><i class="fas fa-times-circle delete-btn"></i></a>
-                            </div>
-                        </div>
-
-                        <div class="task-wrapper">
-                            <div class="box-small">
-                                <input id="four" type="checkbox">
-                                <span class="check-small"></span>
-                                <label for="four" class="">Task 2</label>
-                            </div>
-                            <div class="flex-right">
-                                <span class="due-date">Completed</span>
-                                <a href=""><i class="fas fa-times-circle delete-btn"></i></a>
-                            </div>
-                        </div>
-                        <div class="task-info">
-                            <p class="small-text">This is a task description</p>
-                        </div>
-                    </div>
-
-                    <div class="day-label">Later</div>
-                    <div class="task-wrapper">
-                        <a href=""><i class="fas fa-plus-circle bigger-icon"></i></a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="project">
-                <div class="project-title">
-                    <p class="title">Project 2</p>
-                    <div class="flex-right">
-                        <a class="icon-link"><i class="fas fa-edit white"></i></a>
-                        <a class="icon-link"><i class="fas fa-trash-alt white"></i></a>
-                    </div>
-                </div>
-            </article>
-
-            <article class="project">
-                <div class="project-title">
-                    <p class="title">Project 3</p>
-                    <div class="flex-right">
-                        <a class="icon-link"><i class="fas fa-edit white"></i></a>
-                        <a class="icon-link"><i class="fas fa-trash-alt white"></i></a>
-                    </div>
-                </div>
-            </article> -->
-        </section>
+        <section class="main-body" id='project-display-container'></section>
     </div>
 
     <footer class="bottom-nav"></footer>
@@ -133,6 +42,10 @@
         <div class="project-title">
 
           <p class="title"></p>
+          <form data-project-name-form>
+            <input type="text" class="underline" id="new-project-name-input">
+            <i class="fas fa-check-circle bigger-icon" id="project-name-form-submit"></i>
+          </form>
 
           <div class="flex-right">
               <a class="icon-link"><i class="fas fa-edit white" id="edit-btn"></i></a>
@@ -146,23 +59,24 @@
       <div class="project-block expanded">
         <div class="flex-wrapper">
             <div class="description" >Description</div>
-            <p class="basic-text" data-project-description-text ></p>
+            <p class="basic-text" data-project-description-text id="project-description-text"></p>
+            <form data-project-description-form>
+              <input type="text" class="underline" data-project-description-input>
+              <i class="fas fa-check-circle bigger-icon" id="project-description-form-submit"></i>
+            </form>
         </div>
 
         <div id="task-list">
-
         </div>
 
         <div class="task-wrapper extra-top-margin">
-          <i class="fas fa-plus-circle bigger-icon"></i>
+          <i class="fas fa-plus-circle bigger-icon" id="new-task-button"></i>
           <div class="form-wrapper">
             <form data-new-task-form>
               <input type="text" class="underline" placeholder="Task" data-task-name-input>
               <input type="text" class="underline" placeholder="Description" data-task-desc-input> 
-              <input type="datetime-local" class="underline" placeholder="YYYY-MM-DDTHH:MM" data-task-date-input> 
-              
+              <input type="date" class="underline" data-task-date-input> 
               <i class="fas fa-check-circle bigger-icon" id="new-task-form-submit"></i>
-              <!-- <i class="fas fa-times-circle cancel-btn bigger-icon"></i> -->
             </form>
           </div>
         </div>
