@@ -1,4 +1,6 @@
 import { format, isToday, toDate } from 'date-fns';
+import defaultExport from 'app.js'
+import defaultExport from 'render.js'
 
 // NAVBAR 
 const navbarModule = (function() {
@@ -24,55 +26,49 @@ const navbarModule = (function() {
 
 
 
-
 // Cache DOM
 let newProjectButton = document.getElementById('new-project-btn')
 let newProjectForm = document.getElementById('new-project-form')
 let projectNameInput = document.getElementById('project-name')
 let sidebarProjectContainer = document.querySelector('[data-sidebar-project-container]')
 let projectDisplayContainer = document.getElementById('project-display-container')
-let projectTitleBarTemplate = document.getElementById('project-title-bar-template')
-let projectBlockTemplate = document.getElementById('project-block-template')
 
-// Local Storage 
-const LOCAL_STORAGE_PROJECT_KEY = 'taskify.project'
-const LOCAL_STORAGE_SELECT_PROJECT_ID_KEY = 'taskify.selectedProjectId'
+// Click event to show New Project Form 
+newProjectButton.addEventListener('click', renderForm(newProjectButton, newProjectForm))
 
-let projects = JSON.parse(localStorage.getItem(LOCAL_STORAGE_PROJECT_KEY)) || []
-let selectedProjectId = localStorage.getItem(LOCAL_STORAGE_SELECT_PROJECT_ID_KEY)
-
-
-// Event Binding 
-newProjectButton.addEventListener('click', renderProjectForm)
-
+// Form submit for New Project Form
 newProjectForm.addEventListener('submit', e => {
     e.preventDefault()
     let projectName = projectNameInput.value
     if (projectName == null || projectName === '') {
-        hideProjectForm()
+        hideForm(newProjectButton, newProjectForm)
         return
     }
     let project = createProject(projectName)
     projectNameInput.value = null
-    hideProjectForm()
+    hideForm(newProjectButton, newProjectForm)
     projects.push(project)
     saveAndRender()
 })
 
 
-
+// Click events in the side bar 
 sidebarProjectContainer.addEventListener('click', e => {
     if (e.target.tagName.toLowerCase() === 'li') {
-        selectedProjectId = e.target.dataset.listId
+        let selectedProjectId = e.target.dataset.listId
         let selectedProject = findProject(selectedProjectId)
         selectedProject.selected = !selectedProject.selected
         selectedProject.expanded = false
         saveAndRender()
     }
 })
+
+// Prevent default form submission inside the main body 
 projectDisplayContainer.addEventListener('submit', e => {
     e.preventDefault()
 })
+
+// Click events within the main body 
 projectDisplayContainer.addEventListener('click', e => {
     if (e.target.id == 'delete-project-btn') {
         let projectId = e.target.parentNode.parentNode.parentNode.id
@@ -182,180 +178,6 @@ projectDisplayContainer.addEventListener('click', e => {
         saveAndRender()
     }
 })
-
-// FUCNTIONS 
-
-function findProject(id) {
-    let result = projects.find(project => { return project.id === id })
-    return result
-}
-
-function findTask(taskId, projectId) {
-    let project = findProject(projectId)
-    let result = project.tasks.find(task => task.id === taskId)
-    return result
-}
-
-function renderProjectForm() {
-    newProjectButton.classList.add('hidden')
-    newProjectForm.classList.add('expanded')
-}
-
-function hideProjectForm() {
-    newProjectButton.classList.remove('hidden')
-    newProjectForm.classList.remove('expanded')
-}
-
-function hideForm(button, form) {
-    button.classList.remove('hidden')
-    form.classList.remove('expanded')
-}
-
-function renderForm(button, form) {
-    button.classList.add('hidden')
-    form.classList.add('expanded')
-}
-
-function createProject(name) {
-    return {
-        id: Date.now().toString(),
-        name: name,
-        description: "",
-        selected: false,
-        expanded: false,
-        tasks: []
-    }
-}
-
-function createTask(name, description, duedate) {
-    return {
-        id: Date.now().toString(),
-        name: name,
-        description: description,
-        duedate: duedate,
-        completed: false,
-        expanded: false
-    }
-}
-
-
-
-
-function clearElement(element) {
-    while (element.firstChild) {
-        element.removeChild(element.firstChild)
-    }
-}
-
-function save() {
-    localStorage.setItem(LOCAL_STORAGE_PROJECT_KEY, JSON.stringify(projects))
-}
-
-function renderProjectsList() {
-    clearElement(sidebarProjectContainer)
-
-    projects.forEach(project => {
-        let projectElement = document.createElement('li')
-        projectElement.dataset.listId = project.id
-        projectElement.classList.add('big-link', 'clickable')
-        projectElement.innerText = project.name
-
-        if (project.selected) {
-            projectElement.classList.add('bold')
-        }
-
-        sidebarProjectContainer.appendChild(projectElement)
-    })
-}
-
-function renderProjectsBar() {
-    clearElement(projectDisplayContainer)
-
-    let selectedProjects = projects.filter(project => project.selected === true)
-
-    selectedProjects.forEach(project => {
-        let projectTitleBarElement = document.importNode(projectTitleBarTemplate.content, true)
-        let projectTitleBar = projectTitleBarElement.querySelector('.project-title')
-        let titleElement = projectTitleBarElement.querySelector('.title')
-
-        titleElement.innerText = project.name
-        projectTitleBar.id = project.id
-        projectDisplayContainer.appendChild(projectTitleBarElement)
-
-        let totalTasks = project.tasks.length;
-        let completedTasks = project.tasks.filter(task => task.completed === true).length
-
-        let percent = completedTasks / totalTasks * 100
-
-        projectTitleBar.style.background = `linear-gradient(120deg, rgba(97,192,191,1) ${percent}%, rgba(187,222,214,1) ${percent}%)`
-    })
-}
-
-function renderProjectsBlock() {
-
-    let expandedProjects = projects.filter(project => project.expanded === true)
-    expandedProjects.forEach(project => {
-        let projectTitleBar = document.getElementById(project.id)
-        let projectArticle = projectTitleBar.parentNode
-        let projectBlock = document.importNode(projectBlockTemplate.content, true)
-        let projectDescriptionText = projectBlock.querySelector('[data-project-description-text]')
-        let taskListArea = projectBlock.getElementById('task-list')
-
-        projectDescriptionText.innerText = project.description || "Add a Description here!"
-
-        let sortedTasks = project.tasks.sort((a, b) => (a.duedate > b.duedate) ? 1 : -1)
-        sortedTasks.forEach(task => {
-            let taskTemplate = document.getElementById('task-template')
-            let taskWrapper = document.importNode(taskTemplate.content, true)
-            let checkbox = taskWrapper.querySelector('input[type="checkbox"]')
-            let label = taskWrapper.querySelector(".task-name")
-            let dueDate = taskWrapper.querySelector(".due-date")
-            let mainTaskWrapper = taskWrapper.querySelector('.task-wrapper')
-            let taskDesc = taskWrapper.getElementById('task-description')
-
-            checkbox.checked = task.completed
-            mainTaskWrapper.id = task.id
-            dueDate.innerText = provideDueDate(task)
-
-            label.htmlFor = task.id
-            checkbox.id = task.id
-            label.innerText = task.name
-            taskDesc.innerText = task.description
-
-            if (task.expanded == false) {
-                taskDesc.classList.add('hidden')
-            }
-
-            if (task.completed == true) {
-                label.classList.add('complete')
-            }
-
-            taskListArea.appendChild(taskWrapper)
-        })
-        projectArticle.appendChild(projectBlock)
-    })
-}
-
-function provideDueDate(task) {
-
-    if (task.completed == true) {
-        return "Completed"
-    } else {
-        if (isToday(task.duedate)) {
-            return "Today"
-        } else if (task.duedate == "" || task.duedate == null) {
-            return ""
-        } else {
-            let date = toDate(Date.parse(task.duedate))
-            return format(date, 'PPP')
-        }
-    }
-}
-
-
-
-
-
 
 function saveAndRender() {
     save()
